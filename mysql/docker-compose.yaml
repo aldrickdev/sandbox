@@ -1,0 +1,22 @@
+services:
+  datadog-agent:
+    # https://hub.docker.com/r/datadog/agent/tags
+    image: gcr.io/datadoghq/agent:latest
+    environment:
+    - "DD_HOSTNAME=mysql"
+    env_file:
+    - '~/sandbox.docker.env'
+    volumes:
+    - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    - '$PWD/conf.d/mysql.d:/etc/datadog-agent/conf.d/mysql.d'
+
+  mysql:
+    # https://hub.docker.com/_/mysql/tags
+    image: mysql:8.0.37
+    environment:
+    - "MYSQL_ROOT_PASSWORD=root"
+    volumes:
+    - '$PWD/mysql/conf.d:/etc/mysql/conf.d'
+    - '$PWD/mysql/init-sql:/docker-entrypoint-initdb.d'
+  
+

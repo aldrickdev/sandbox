@@ -1,0 +1,23 @@
+services:
+  datadog-agent:
+    # https://hub.docker.com/r/datadog/agent/tags
+    image: gcr.io/datadoghq/agent:latest
+    environment:
+    - "DD_HOSTNAME=postgres"
+    env_file:
+    - '~/sandbox.docker.env'
+    volumes:
+    - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    - '$PWD/conf.d/postgres.d:/etc/datadog-agent/conf.d/postgres.d'
+
+  postgres:
+    # https://hub.docker.com/_/postgres/tags
+    image: postgres:16
+    environment:
+    - "POSTGRES_PASSWORD=root"
+    command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
+    volumes:
+    - '$PWD/postgres/postgresql.conf:/etc/postgresql/postgresql.conf'
+    - '$PWD/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql'
+  
+
