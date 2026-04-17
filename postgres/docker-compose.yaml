@@ -1,3 +1,4 @@
+name: ""
 services:
   datadog-agent:
     # https://hub.docker.com/r/datadog/agent/tags
