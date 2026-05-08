@@ -5,8 +5,7 @@ services:
     image: gcr.io/datadoghq/agent:latest
     environment:
     - "DD_HOSTNAME=sqlserver"
-    env_file:
-    - '~/sandbox.docker.env'
+    - "DD_API_KEY=$DD_API_KEY"
     volumes:
     - '/var/run/docker.sock:/var/run/docker.sock:ro'
     - '$PWD/conf.d/sqlserver.d:/etc/datadog-agent/conf.d/sqlserver.d'
